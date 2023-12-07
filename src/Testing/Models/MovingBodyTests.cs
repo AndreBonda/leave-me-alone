@@ -4,7 +4,7 @@ using App.Models;
 using FluentAssertions;
 using Velaptor.Graphics;
 
-namespace Testing.Model;
+namespace Testing.Models;
 
 [TestFixture]
 public class MovingBodyTests

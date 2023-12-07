@@ -14,7 +14,7 @@ public class BodyBuilder
 
     private readonly uint _windowWidth;
     private readonly uint _windowHeight;
-    private readonly RandomGenerator _rnd; // TODO: use DI to get a RandomGenerator instance
+    private readonly RandomGenerator _rnd;
 
     public BodyBuilder(uint width, uint height, RandomGenerator rnd)
     {
