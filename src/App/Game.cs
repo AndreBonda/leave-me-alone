@@ -1,3 +1,4 @@
+using App.Helpers;
 using App.Models;
 using Velaptor;
 using Velaptor.Batching;
@@ -14,14 +15,16 @@ public class Game : Window
     private IShapeRenderer _renderer = RendererFactory.CreateShapeRenderer();
     private IBatcher _batcher = RendererFactory.CreateBatcher();
 
-
     public Game()
     {
         _model = new Model(
-            Width, 
-            Height, 
-            new BodyBuilder(Width, Height)
-        );
+            Width,
+            Height,
+            new BodyBuilder(
+                Width,
+                Height,
+                new RandomGenerator(new Random())
+                ));
     }
 
     protected override void OnLoad()

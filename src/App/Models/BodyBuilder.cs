@@ -14,12 +14,13 @@ public class BodyBuilder
 
     private readonly uint _windowWidth;
     private readonly uint _windowHeight;
-    private readonly RandomGenerator _rnd = new(new Random()); // TODO: use DI to get a RandomGenerator instance
+    private readonly RandomGenerator _rnd; // TODO: use DI to get a RandomGenerator instance
 
-    public BodyBuilder(uint width, uint height)
+    public BodyBuilder(uint width, uint height, RandomGenerator rnd)
     {
         _windowWidth = width;
         _windowHeight = height;
+        _rnd = rnd;
     }
 
     public MovingBody BuildNewMeteorite()
