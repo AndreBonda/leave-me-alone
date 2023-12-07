@@ -7,4 +7,18 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="KinsonDigital.Velaptor" Version="1.0.0-preview.30" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Content\Graphics\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="Content\Graphics\velaptor_mascot.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>
