@@ -1,6 +1,6 @@
 namespace App.Helpers;
 
-public sealed class RandomGenerator
+public class RandomGenerator
 {
     private readonly Random _rnd;
 
@@ -9,9 +9,9 @@ public sealed class RandomGenerator
         _rnd = rnd;
     }
 
-    public int Next(int maxValue) => _rnd.Next(maxValue);
+    public virtual int Next(int maxValue) => _rnd.Next(maxValue);
 
-    public float RandomFloat(float min, float max)
+    public virtual float RandomFloat(float min, float max)
     {
         if (min > max) throw new ArgumentException($"Min value {min} must be less than or equal to max value {max}");
 
