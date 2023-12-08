@@ -14,13 +14,11 @@ public class Model
         _bodyBuilder = bodyBuilder;
     }
 
-    public void SpawnMeteorite() => _meteorites.Add(_bodyBuilder.BuildNewMeteorite());
+    public virtual void GenerateMeteorite() => _meteorites.Add(_bodyBuilder.BuildNewMeteorite());
 
-    public void UpdateMeteorites()
+    public virtual void UpdateBodies()
     {
-        foreach(var m in _meteorites)
-        {
+        foreach (var m in _meteorites)
             m.Update();
-        }
     }
 }

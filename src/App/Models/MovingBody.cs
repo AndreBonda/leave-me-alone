@@ -3,7 +3,7 @@ using Velaptor.Graphics;
 
 namespace App.Models;
 
-public class MovingBody : Body
+public sealed class MovingBody : Body
 {
     private Vector2 _vector;
 

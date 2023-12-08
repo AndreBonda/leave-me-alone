@@ -11,20 +11,24 @@ namespace App;
 
 public class Game : Window
 {
-    private readonly Model _model;
+    private readonly Controller _controller;
     private IShapeRenderer _renderer = RendererFactory.CreateShapeRenderer();
     private IBatcher _batcher = RendererFactory.CreateBatcher();
 
+
     public Game()
     {
-        _model = new Model(
-            Width,
-            Height,
-            new BodyBuilder(
+        _controller = new(
+            new Model(
                 Width,
                 Height,
-                new RandomGenerator(new Random())
-                ));
+                new BodyBuilder(
+                    Width,
+                    Height,
+                    new RandomGenerator(new Random())
+                )
+            )
+        );
     }
 
     protected override void OnLoad()
@@ -34,14 +38,13 @@ public class Game : Window
 
     protected override void OnUpdate(FrameTime frameTime)
     {
-        Console.WriteLine($"--- Update ---\nFrameTime {frameTime}");
+        _controller.UpdateGame(frameTime);
         base.OnUpdate(frameTime);
     }
 
     protected override void OnDraw(FrameTime frameTime)
     {
         _batcher.Begin();
-
         base.OnDraw(frameTime);
     }
 
