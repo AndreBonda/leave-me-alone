@@ -4,19 +4,19 @@ namespace App.Models;
 
 public class Model
 {
-    private readonly uint _width;
-    private readonly uint _height;
+    private readonly uint _windowWidth;
+    private readonly uint _windowHeight;
     private readonly HashSet<MovingBody> _meteorites = new();
     private readonly BodyBuilder _bodyBuilder;
 
-    public Model(uint width, uint height, BodyBuilder bodyBuilder)
+    public Model(uint windowWidth, uint windowHeight, BodyBuilder bodyBuilder)
     {
-        _width = width;
-        _height = height;
+        _windowWidth = windowWidth;
+        _windowHeight = windowHeight;
         _bodyBuilder = bodyBuilder;
     }
 
-    public virtual void GenerateMeteorite() => _meteorites.Add(_bodyBuilder.BuildNewMeteorite());
+    public virtual void GenerateMeteorite() => _meteorites.Add(_bodyBuilder.BuildNewMeteorite(_windowWidth, _windowHeight));
 
     public virtual void UpdateBodies()
     {

@@ -20,11 +20,7 @@ public class ControllerTests
         _model = Substitute.For<Model>(
             (uint)0,
             (uint)0,
-            new BodyBuilder(
-                (uint)0,
-                (uint)0,
-                new RandomGenerator(new Random())
-            )
+            new BodyBuilder(new RandomGenerator(new Random()))
         );
         _sut = new(_model, new View(_model, Substitute.For<IShapeRenderer>(), Substitute.For<IBatcher>()));
     }

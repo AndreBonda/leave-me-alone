@@ -20,11 +20,7 @@ public class Game : Window
         var model = new Model(
                 Width,
                 Height,
-                new BodyBuilder(
-                    Width,
-                    Height,
-                    new RandomGenerator(new Random())
-                )
+                new BodyBuilder(new RandomGenerator(new Random()))
             );
 
         _controller = new(model, new View(model, _renderer, _batcher));

@@ -18,7 +18,7 @@ public class BodyBuilderTests
     protected void SetUp()
     {
         _rnd = Substitute.For<RandomGenerator>(new Random());
-        _sut = new BodyBuilder(width: windowWidth, height: windowHeight, rnd: _rnd);
+        _sut = new BodyBuilder(rnd: _rnd);
     }
 
     [Test]
@@ -29,7 +29,7 @@ public class BodyBuilderTests
         _rnd.RandomFloat(default, default).ReturnsForAnyArgs(expectedRadius);
 
         // Act
-        var actual = _sut.BuildNewMeteorite();
+        var actual = _sut.BuildNewMeteorite(windowWidth, windowHeight);
 
         // Assert
         actual.Shape.Radius.Should()
@@ -45,7 +45,7 @@ public class BodyBuilderTests
         _rnd.Next(4).Returns(0);
 
         // Act
-        var actual = _sut.BuildNewMeteorite();
+        var actual = _sut.BuildNewMeteorite(windowWidth, windowHeight);
 
         // Assert
         actual.Shape.Color.Should().Be(expectedColor);
@@ -61,7 +61,7 @@ public class BodyBuilderTests
         _rnd.RandomFloat(default, default).ReturnsForAnyArgs(expectedX);
 
         // Act
-        var actual = _sut.BuildNewMeteorite();
+        var actual = _sut.BuildNewMeteorite(windowWidth, windowHeight);
 
         // Assert
         _rnd.Received().RandomFloat(0, windowWidth);
@@ -79,7 +79,7 @@ public class BodyBuilderTests
         _rnd.RandomFloat(default, default).ReturnsForAnyArgs(expectedY);
 
         // Act
-        var actual = _sut.BuildNewMeteorite();
+        var actual = _sut.BuildNewMeteorite(windowWidth, windowHeight);
 
         // Assert
         _rnd.Received().RandomFloat(0, windowHeight);
@@ -97,7 +97,7 @@ public class BodyBuilderTests
         _rnd.RandomFloat(default, default).ReturnsForAnyArgs(expectedX);
 
         // Act
-        var actual = _sut.BuildNewMeteorite();
+        var actual = _sut.BuildNewMeteorite(windowWidth, windowHeight);
 
         // Assert
         _rnd.Received().RandomFloat(0, windowWidth);
@@ -115,7 +115,7 @@ public class BodyBuilderTests
         _rnd.RandomFloat(default, default).ReturnsForAnyArgs(expectedY);
 
         // Act
-        var actual = _sut.BuildNewMeteorite();
+        var actual = _sut.BuildNewMeteorite(windowWidth, windowHeight);
 
         // Assert
         _rnd.Received().RandomFloat(0, windowHeight);
@@ -133,7 +133,7 @@ public class BodyBuilderTests
         _rnd.Next(default).ReturnsForAnyArgs((int)windowSide);
 
         // Act
-        _sut.BuildNewMeteorite();
+        _sut.BuildNewMeteorite(windowWidth, windowHeight);
 
         // Assert
         _rnd.Received().RandomFloat(minValueX, maxValueX);
