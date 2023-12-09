@@ -1,10 +1,4 @@
-using App.Helpers;
-using App.Models;
 using Velaptor;
-using Velaptor.Batching;
-using Velaptor.Factories;
-using Velaptor.Graphics;
-using Velaptor.Graphics.Renderers;
 using Velaptor.UI;
 
 namespace App;
@@ -12,22 +6,15 @@ namespace App;
 public class Game : Window
 {
     private readonly Controller _controller;
-    private IShapeRenderer _renderer = RendererFactory.CreateShapeRenderer();
-    private IBatcher _batcher = RendererFactory.CreateBatcher();
 
-    public Game()
+    public Game(Controller controller)
     {
-        var model = new Model(
-                Width,
-                Height,
-                new BodyBuilder(new RandomGenerator(new Random()))
-            );
-
-        _controller = new(model, new View(model, _renderer, _batcher));
+        _controller = controller;
     }
 
     protected override void OnLoad()
     {
+        _controller.InitWindowSize(Width, Height);
         base.OnLoad();
     }
 
@@ -39,7 +26,6 @@ public class Game : Window
 
     protected override void OnDraw(FrameTime frameTime)
     {
-        _batcher.Begin();
         _controller.RenderGame();
         base.OnDraw(frameTime);
     }

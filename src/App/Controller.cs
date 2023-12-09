@@ -19,6 +19,9 @@ public class Controller
         _view = view;
     }
 
+    public void InitWindowSize(uint windowWidth, uint windowHeight) =>
+        _model.InitWindowSize(windowWidth, windowHeight);
+
     public void UpdateGame(FrameTime frameTime)
     {
         _elapsedMs += frameTime.ElapsedTime.Milliseconds;

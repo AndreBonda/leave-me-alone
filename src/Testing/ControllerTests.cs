@@ -13,16 +13,28 @@ public class ControllerTests
 {
     private Controller _sut;
     private Model _model;
+    private View _view;
 
     [SetUp]
     protected void SetUp()
     {
+        // _model = Substitute.For<Model>(
+        //     new BodyBuilder(new RandomGenerator(new Random()))
+        // );
+
         _model = Substitute.For<Model>(
-            (uint)0,
-            (uint)0,
-            new BodyBuilder(new RandomGenerator(new Random()))
+            Substitute.For<BodyBuilder>(
+                Substitute.For<RandomGenerator>(
+                    Substitute.For<Random>()
+                )
+            )
         );
-        _sut = new(_model, new View(_model, Substitute.For<IShapeRenderer>(), Substitute.For<IBatcher>()));
+        _view = Substitute.For<View>(
+            _model,
+            Substitute.For<IShapeRenderer>(),
+            Substitute.For<IBatcher>()
+        );
+        _sut = new Controller(_model, _view);
     }
 
     [Test]
