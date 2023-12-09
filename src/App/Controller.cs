@@ -10,11 +10,13 @@ public class Controller
     /// </summary>
     private const float _METEORITE_FREQUENCY_GENERATION = 500;
     private readonly Model _model;
+    private readonly View _view;
     private float _elapsedMs = 0;
 
-    public Controller(Model model)
+    public Controller(Model model, View view)
     {
         _model = model;
+        _view = view;
     }
 
     public void UpdateGame(FrameTime frameTime)
@@ -28,5 +30,10 @@ public class Controller
         }
 
         _model.UpdateBodies();
+    }
+
+    public void RenderGame()
+    {
+        _view.RenderBodies();
     }
 }

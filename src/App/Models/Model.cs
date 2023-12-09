@@ -1,3 +1,5 @@
+using Velaptor.Graphics;
+
 namespace App.Models;
 
 public class Model
@@ -20,5 +22,13 @@ public class Model
     {
         foreach (var m in _meteorites)
             m.Update();
+    }
+
+    public IEnumerable<CircleShape> GetMeteoriteShapes()
+    {
+        foreach (var m in _meteorites)
+        {
+            yield return m.Shape;
+        }
     }
 }

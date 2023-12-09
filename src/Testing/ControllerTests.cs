@@ -24,7 +24,7 @@ public class ControllerTests
                 new RandomGenerator(new Random())
             )
         );
-        _sut = new(_model);
+        _sut = new(_model, new View(_model, null, null));
     }
 
     [Test]

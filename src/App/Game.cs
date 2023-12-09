@@ -15,11 +15,9 @@ public class Game : Window
     private IShapeRenderer _renderer = RendererFactory.CreateShapeRenderer();
     private IBatcher _batcher = RendererFactory.CreateBatcher();
 
-
     public Game()
     {
-        _controller = new(
-            new Model(
+        var model = new Model(
                 Width,
                 Height,
                 new BodyBuilder(
@@ -27,8 +25,9 @@ public class Game : Window
                     Height,
                     new RandomGenerator(new Random())
                 )
-            )
-        );
+            );
+
+        _controller = new(model, new View(model, _renderer, _batcher));
     }
 
     protected override void OnLoad()
@@ -45,6 +44,7 @@ public class Game : Window
     protected override void OnDraw(FrameTime frameTime)
     {
         _batcher.Begin();
+        _controller.RenderGame();
         base.OnDraw(frameTime);
     }
 
