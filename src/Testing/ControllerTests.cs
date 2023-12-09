@@ -3,6 +3,8 @@ using App.Helpers;
 using App.Models;
 using NSubstitute;
 using Velaptor;
+using Velaptor.Batching;
+using Velaptor.Graphics.Renderers;
 
 namespace Testing.App;
 
@@ -24,7 +26,7 @@ public class ControllerTests
                 new RandomGenerator(new Random())
             )
         );
-        _sut = new(_model, new View(_model, null, null));
+        _sut = new(_model, new View(_model, Substitute.For<IShapeRenderer>(), Substitute.For<IBatcher>()));
     }
 
     [Test]
