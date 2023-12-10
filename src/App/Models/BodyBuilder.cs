@@ -7,21 +7,17 @@ namespace App.Models;
 
 public class BodyBuilder
 {
-    private readonly uint _windowWidth;
-    private readonly uint _windowHeight;
     private readonly RandomGenerator _rnd;
 
-    public BodyBuilder(uint width, uint height, RandomGenerator rnd)
+    public BodyBuilder(RandomGenerator rnd)
     {
-        _windowWidth = width;
-        _windowHeight = height;
         _rnd = rnd;
     }
 
-    public MovingBody BuildNewMeteorite()
+    public MovingBody BuildNewMeteorite(uint windowWidth, uint windowHeight)
     {
         var side = RandomSide();
-        return new MovingBody(GenerateRandomCircleShape(side), GenerateRandomVector(side));
+        return new MovingBody(GenerateRandomCircleShape(side, windowWidth, windowHeight), GenerateRandomVector(side));
     }
 
     private Sides RandomSide()
@@ -30,11 +26,11 @@ public class BodyBuilder
         return (Sides)random;
     }
 
-    private CircleShape GenerateRandomCircleShape(Sides side) =>
+    private CircleShape GenerateRandomCircleShape(Sides side, uint windowWidth, uint windowHeight) =>
         new()
         {
             Radius = RandomMeteoriteRadius(),
-            Position = RandomInitialPosition(side),
+            Position = RandomInitialPosition(side, windowWidth, windowHeight),
             Color = RandomColor(),
         };
 
@@ -53,13 +49,13 @@ public class BodyBuilder
     private float RandomMeteoriteRadius() => 
         _rnd.RandomFloat(GameConsts.MIN_METEORITE_RADIUS, GameConsts.MAX_METEORITE_RADIUS);
 
-    private Vector2 RandomInitialPosition(Sides side) =>
+    private Vector2 RandomInitialPosition(Sides side, uint windowWidth, uint windowHeight) =>
         side switch
         {
-            Sides.TOP => new(_rnd.RandomFloat(0, _windowWidth), 0),
-            Sides.RIGHT => new(_windowWidth, _rnd.RandomFloat(0, _windowHeight)),
-            Sides.BOTTOM => new(_rnd.RandomFloat(0, _windowWidth), _windowHeight),
-            Sides.LEFT => new(0, _rnd.RandomFloat(0, _windowHeight)),
+            Sides.TOP => new(_rnd.RandomFloat(0, windowWidth), 0),
+            Sides.RIGHT => new(windowWidth, _rnd.RandomFloat(0, windowHeight)),
+            Sides.BOTTOM => new(_rnd.RandomFloat(0, windowWidth), windowHeight),
+            Sides.LEFT => new(0, _rnd.RandomFloat(0, windowHeight)),
             _ => throw new ArgumentException($"Invalid side value {side}")
         };
 }
