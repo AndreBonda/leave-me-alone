@@ -7,8 +7,8 @@ namespace App;
 public class View
 {
     private readonly Model _model;
-    private readonly IShapeRenderer _renderer;
-    private readonly IBatcher _batcher;
+    private IShapeRenderer _renderer;
+    private IBatcher _batcher;
 
     public View(Model model, IShapeRenderer renderer, IBatcher batcher)
     {

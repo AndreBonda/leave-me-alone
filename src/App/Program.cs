@@ -1,15 +1,24 @@
 ﻿using App;
 using App.Helpers;
 using App.Models;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Velaptor.Factories;
+using Velaptor.Graphics.Renderers;
 
-// Initialize game components
-var model = new Model(new BodyBuilder(
-        new RandomGenerator(
-            new Random()
-        )
-    ));
-var view = new View(model, RendererFactory.CreateShapeRenderer(), RendererFactory.CreateBatcher());
-var controller = new Controller(model,view);
-var game = new Game(controller);
+using IHost host = Host.CreateDefaultBuilder(args)
+    .ConfigureServices(services =>
+    {
+        services.AddSingleton<Random>();
+        services.AddSingleton<RandomGenerator>();
+        services.AddSingleton<BodyBuilder>();
+        services.AddSingleton<Model>();
+        services.AddSingleton(RendererFactory.CreateShapeRenderer());
+        services.AddSingleton(RendererFactory.CreateBatcher());
+        services.AddSingleton<View>();
+        services.AddSingleton<Controller>();
+    })
+    .Build();
+
+var game = new Game(host.Services.GetService<Controller>());
 game.Show();
