@@ -4,7 +4,6 @@ using App.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Velaptor.Factories;
-using Velaptor.Graphics.Renderers;
 
 using IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
