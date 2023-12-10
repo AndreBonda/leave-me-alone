@@ -3,7 +3,7 @@ using Velaptor.Graphics;
 
 namespace App.Models;
 
-public sealed class MovingBody : Body
+public class MovingBody : Body
 {
     private Vector2 _vector;
 
@@ -12,7 +12,7 @@ public sealed class MovingBody : Body
         _vector = vector;
     }
 
-    public void Update()
+    public virtual void Update()
     {
         var oldPosition = _shape.Position;
         _shape.Position = new Vector2(
