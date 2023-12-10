@@ -17,7 +17,9 @@ public class BodyBuilderTests
     [SetUp]
     protected void SetUp()
     {
-        _rnd = Substitute.For<RandomGenerator>(new Random());
+        _rnd = Substitute.For<RandomGenerator>(
+            Substitute.For<Random>()
+        );
         _sut = new BodyBuilder(rnd: _rnd);
     }
 

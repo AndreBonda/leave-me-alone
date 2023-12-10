@@ -18,10 +18,6 @@ public class ControllerTests
     [SetUp]
     protected void SetUp()
     {
-        // _model = Substitute.For<Model>(
-        //     new BodyBuilder(new RandomGenerator(new Random()))
-        // );
-
         _model = Substitute.For<Model>(
             Substitute.For<BodyBuilder>(
                 Substitute.For<RandomGenerator>(
