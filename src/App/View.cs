@@ -21,9 +21,14 @@ public class View
     {
         _batcher.Begin();
 
-        foreach (var s in _model.GetMeteoriteShapes())
+        foreach (var m in _model.GetMeteorites())
         {
-            _renderer.Render(s);
+            _renderer.Render(m.Shape);
+        }
+
+        foreach(var p in _model.GetProjectiles())
+        {
+            _renderer.Render(p.Shape);
         }
 
         _batcher.End();

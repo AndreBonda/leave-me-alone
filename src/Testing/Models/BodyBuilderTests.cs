@@ -125,11 +125,12 @@ public class BodyBuilderTests
         actual.Shape.Position.Y.Should().Be(expectedY);
     }
 
-    [TestCase(Sides.TOP, -GameConsts.MAX_V, GameConsts.MAX_V, 0, GameConsts.MAX_V)]
-    [TestCase(Sides.RIGHT, -GameConsts.MAX_V, 0, -GameConsts.MAX_V, GameConsts.MAX_V)]
-    [TestCase(Sides.BOTTOM, -GameConsts.MAX_V, GameConsts.MAX_V, -GameConsts.MAX_V, 0)]
-    [TestCase(Sides.LEFT, 0, GameConsts.MAX_V, -GameConsts.MAX_V, GameConsts.MAX_V)]
-    public void BuildNewMeteorite_WhenBodyInvoked_CallsRandomFloatWithCorrectParameters(Sides windowSide, int minValueX, int maxValueX, int minValueY, int maxValueY)
+    [TestCase(Sides.TOP, -GameParameters.MAX_V, GameParameters.MAX_V, 0, GameParameters.MAX_V)]
+    [TestCase(Sides.RIGHT, -GameParameters.MAX_V, 0, -GameParameters.MAX_V, GameParameters.MAX_V)]
+    [TestCase(Sides.BOTTOM, -GameParameters.MAX_V, GameParameters.MAX_V, -GameParameters.MAX_V, 0)]
+    [TestCase(Sides.LEFT, 0, GameParameters.MAX_V, -GameParameters.MAX_V, GameParameters.MAX_V)]
+    public void BuildNewMeteorite_WhenInvoked_CallsRandomFloatWithCorrectParameters(
+        Sides windowSide, int minValueX, int maxValueX, int minValueY, int maxValueY)
     {
         // Arrange
         _rnd.Next(default).ReturnsForAnyArgs((int)windowSide);
@@ -140,5 +141,49 @@ public class BodyBuilderTests
         // Assert
         _rnd.Received().RandomFloat(minValueX, maxValueX);
         _rnd.Received().RandomFloat(minValueY, maxValueY);
+    }
+
+    [TestCase(100u, 80u, GameParameters.PROJECTILE_RADIUS, 50F, 40F)]
+    public void BuildNewProjectile_WhenInvoked_ReturnsAProjectileWithExpectedProperties(
+        uint windowWidth,
+        uint windowHeight,
+        float expectedRadius,
+        float expectedProjectileX,
+        float expectedProjectileY
+    )
+    {
+        // Act
+        var actual = _sut.BuildNewProjectile(windowWidth, windowHeight, new(20, 20));
+
+        // Assert
+        actual.Shape.Radius.Should().Be(expectedRadius);
+        actual.Shape.Position.X.Should().BeApproximately(expectedProjectileX, 0.1F);
+        actual.Shape.Position.Y.Should().BeApproximately(expectedProjectileY, 0.1F);
+    }
+
+    [TestCase(75, 40, 60, 40)] // projectile direction: right
+    [TestCase(25, 40, 40, 40)] // projectile direction: left
+    [TestCase(50, 10, 50, 30)] // projectile direction: top
+    [TestCase(50, 60, 50, 50)] // projectile direction: bottom
+    [TestCase(70, 20, 57.07F, 32.93F)] // projectile direction: top-left
+    [TestCase(30, 60, 42.93F, 47.07F)] // projectile direction: bottom-right
+    public void BuildNewProjectile_WhenInvoked_ReturnsAProjectileWithExpectedTrajectory(
+    int userClickX,
+    int userClickY,
+    float expectedProjectileXAfterUpdate,
+    float expectedProjectileYAfterUpdate
+    )
+    {
+        // Arrange
+        var windowWidth = 100u;
+        var windowHeight = 80u;
+
+        // Act
+        var actual = _sut.BuildNewProjectile(windowWidth, windowHeight, new(userClickX, userClickY));
+        actual.Update();
+
+        // Assert
+        actual.Shape.Position.X.Should().BeApproximately(expectedProjectileXAfterUpdate, 0.1F);
+        actual.Shape.Position.Y.Should().BeApproximately(expectedProjectileYAfterUpdate, 0.1F);
     }
 }

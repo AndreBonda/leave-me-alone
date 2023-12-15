@@ -7,6 +7,7 @@ public class Model
     private uint? _windowWidth;
     private uint? _windowHeight;
     private readonly HashSet<MovingBody> _meteorites = new();
+    private readonly HashSet<Projectile> _projectiles = new();
     private readonly BodyBuilder _bodyBuilder;
 
     public Model(BodyBuilder bodyBuilder)
@@ -21,18 +22,17 @@ public class Model
     }
 
     public virtual void GenerateMeteorite() => _meteorites.Add(_bodyBuilder.BuildNewMeteorite(_windowWidth.Value, _windowHeight.Value));
+    public virtual void GenerateProjectile((int X, int Y) userClickCC) => _projectiles.Add(_bodyBuilder.BuildNewProjectile(_windowWidth.Value, _windowHeight.Value, userClickCC));
 
     public virtual void UpdateBodies()
     {
         foreach (var m in _meteorites)
             m.Update();
+
+        foreach (var p in _projectiles)
+            p.Update();
     }
 
-    public IEnumerable<CircleShape> GetMeteoriteShapes()
-    {
-        foreach (var m in _meteorites)
-        {
-            yield return m.Shape;
-        }
-    }
+    public IEnumerable<MovingBody> GetMeteorites() => _meteorites;
+    public IEnumerable<MovingBody> GetProjectiles() => _projectiles;
 }

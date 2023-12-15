@@ -5,6 +5,7 @@ using NSubstitute;
 using Velaptor;
 using Velaptor.Batching;
 using Velaptor.Graphics.Renderers;
+using Velaptor.Input;
 
 namespace Testing.App;
 
@@ -25,12 +26,14 @@ public class ControllerTests
                 )
             )
         );
+
         _view = Substitute.For<View>(
             _model,
             Substitute.For<IShapeRenderer>(),
             Substitute.For<IBatcher>()
         );
-        _sut = new Controller(_model, _view);
+        
+        _sut = new Controller(_model, _view, Substitute.For<IAppInput<MouseState>>());
     }
 
     [Test]
