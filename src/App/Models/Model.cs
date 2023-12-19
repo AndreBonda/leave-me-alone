@@ -26,13 +26,24 @@ public class Model
 
     public virtual void UpdateBodies()
     {
+        ArgumentNullException.ThrowIfNull(_windowWidth);
+        ArgumentNullException.ThrowIfNull(_windowHeight);
+
         foreach (var m in _meteorites)
-            m.Update();
+            m.Update(_windowWidth.Value, _windowHeight.Value);
 
         foreach (var p in _projectiles)
-            p.Update();
+            p.Update(_windowWidth.Value, _windowHeight.Value);
+
+        HandleBodyDespawn();
     }
 
     public IEnumerable<MovingBody> GetMeteorites() => _meteorites;
     public IEnumerable<MovingBody> GetProjectiles() => _projectiles;
+
+    private void HandleBodyDespawn()
+    {
+        _meteorites.RemoveWhere(m => m.Despawn);
+        _projectiles.RemoveWhere(p => p.Despawn);
+    }
 }

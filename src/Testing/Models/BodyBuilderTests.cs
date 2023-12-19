@@ -180,7 +180,7 @@ public class BodyBuilderTests
 
         // Act
         var actual = _sut.BuildNewProjectile(windowWidth, windowHeight, new(userClickX, userClickY));
-        actual.Update();
+        actual.Update(windowWidth, windowHeight);
 
         // Assert
         actual.Shape.Position.X.Should().BeApproximately(expectedProjectileXAfterUpdate, 0.1F);

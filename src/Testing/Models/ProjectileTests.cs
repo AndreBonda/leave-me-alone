@@ -16,6 +16,8 @@ public class ProjectileTests
         // Arrange
         float vx = 5;
         byte trailMaxLength = 3;
+        uint windowWidth = 100;
+        uint windowHeight = 100;
 
         var sut = new Projectile(
             new CircleShape()
@@ -29,14 +31,14 @@ public class ProjectileTests
         );
 
         // Act & Assert
-        sut.Update();
+        sut.Update(windowWidth, windowHeight);
         sut.EndOfTrail.Should().Be((0, 0));
-        sut.Update();
+        sut.Update(windowWidth, windowHeight);
         sut.EndOfTrail.Should().Be((0, 0));
-        sut.Update();
+        sut.Update(windowWidth, windowHeight);
         sut.EndOfTrail.Should().Be((0, 0));
         // the trail is full now
-        sut.Update();
+        sut.Update(windowWidth, windowHeight);
         sut.EndOfTrail.Should().Be((5, 0));
     }
 }

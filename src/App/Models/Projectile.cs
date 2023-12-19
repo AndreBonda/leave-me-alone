@@ -15,10 +15,10 @@ public class Projectile : MovingBody
         _trail = new Queue<(float X, float Y)>(_trailMaxLength);
     }
 
-    public override void Update()
+    public override void Update(uint windowWidth, uint windowHeight)
     {
         EnqueueCurrentPositionToTrail(_shape.Position.X, _shape.Position.Y);
-        base.Update();
+        base.Update(windowWidth, windowHeight);
     }
 
     private void EnqueueCurrentPositionToTrail(float x, float y)
