@@ -14,6 +14,8 @@ using IHost host = Host.CreateDefaultBuilder(args)
         services.AddSingleton<Model>();
         services.AddSingleton(RendererFactory.CreateShapeRenderer());
         services.AddSingleton(RendererFactory.CreateBatcher());
+        services.AddSingleton(ContentLoaderFactory.CreateFontLoader());
+        services.AddSingleton(RendererFactory.CreateFontRenderer());
         services.AddSingleton<View>();
         services.AddSingleton(HardwareFactory.GetMouse());
         services.AddSingleton<Controller>();

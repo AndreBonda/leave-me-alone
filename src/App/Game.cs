@@ -14,7 +14,7 @@ public class Game : Window
 
     protected override void OnLoad()
     {
-        _controller.InitWindowSize(Width, Height);
+        _controller.LoadGame(Width, Height);
         base.OnLoad();
     }
 
@@ -32,6 +32,7 @@ public class Game : Window
 
     protected override void OnUnload()
     {
+        _controller.UnloadGame();
         base.OnUnload();
     }
 }

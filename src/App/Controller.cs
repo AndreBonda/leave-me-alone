@@ -1,5 +1,7 @@
 using App.Models;
 using Velaptor;
+using Velaptor.Content;
+using Velaptor.Content.Fonts;
 using Velaptor.Input;
 
 namespace App;
@@ -13,18 +15,23 @@ public class Controller
     private readonly Model _model;
     private readonly View _view;
     private readonly IAppInput<MouseState> _mouse;
+    private readonly ILoader<IFont> _fontLoader;
     private float _elapsedMs = 0;
     private MouseState _prevMouseState;
 
-    public Controller(Model model, View view, IAppInput<MouseState> mouse)
+    public Controller(Model model, View view, IAppInput<MouseState> mouse, ILoader<IFont> fontLoader)
     {
         _model = model;
         _view = view;
         _mouse = mouse;
+        _fontLoader = fontLoader;
     }
 
-    public void InitWindowSize(uint windowWidth, uint windowHeight) =>
+    public void LoadGame(uint windowWidth, uint windowHeight)
+    {
         _model.InitWindowSize(windowWidth, windowHeight);
+        _view.Font = _fontLoader.Load("TimesNewRoman-Regular|size:12");
+    }
 
     public void UpdateGame(FrameTime frameTime)
     {
@@ -45,7 +52,12 @@ public class Controller
 
     public void RenderGame()
     {
-        _view.RenderBodies();
+        _view.RenderGame();
+    }
+
+    public void UnloadGame()
+    {
+        _fontLoader.Unload("TimesNewRoman-Regular|size:12");
     }
 
     private bool IsMouseLeftButtonClicked() => _mouse.GetState().IsLeftButtonDown() && _prevMouseState.IsLeftButtonUp();

@@ -4,6 +4,8 @@ using App.Models;
 using NSubstitute;
 using Velaptor;
 using Velaptor.Batching;
+using Velaptor.Content;
+using Velaptor.Content.Fonts;
 using Velaptor.Graphics.Renderers;
 using Velaptor.Input;
 
@@ -29,11 +31,12 @@ public class ControllerTests
 
         _view = Substitute.For<View>(
             _model,
+            Substitute.For<IFontRenderer>(),
             Substitute.For<IShapeRenderer>(),
             Substitute.For<IBatcher>()
         );
 
-        _sut = new Controller(_model, _view, Substitute.For<IAppInput<MouseState>>());
+        _sut = new Controller(_model, _view, Substitute.For<IAppInput<MouseState>>(), Substitute.For<ILoader<IFont>>());
     }
 
     [Test]
