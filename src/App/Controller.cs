@@ -39,7 +39,7 @@ public class Controller
             _elapsedMs = 0;
         }
 
-        _model.UpdateBodies();
+        _model.UpdateGameModel();
         _prevMouseState = _mouse.GetState();
     }
 

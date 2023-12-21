@@ -32,7 +32,7 @@ public class ControllerTests
             Substitute.For<IShapeRenderer>(),
             Substitute.For<IBatcher>()
         );
-        
+
         _sut = new Controller(_model, _view, Substitute.For<IAppInput<MouseState>>());
     }
 
@@ -65,6 +65,6 @@ public class ControllerTests
         _sut.UpdateGame(frameTime);
 
         // Assert
-        _model.Received().UpdateBodies();
+        _model.Received().UpdateGameModel();
     }
 }

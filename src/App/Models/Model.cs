@@ -24,26 +24,36 @@ public class Model
     public virtual void GenerateMeteorite() => _meteorites.Add(_bodyBuilder.BuildNewMeteorite(_windowWidth.Value, _windowHeight.Value));
     public virtual void GenerateProjectile((int X, int Y) userClickCC) => _projectiles.Add(_bodyBuilder.BuildNewProjectile(_windowWidth.Value, _windowHeight.Value, userClickCC));
 
-    public virtual void UpdateBodies()
+    public virtual void UpdateGameModel()
     {
         ArgumentNullException.ThrowIfNull(_windowWidth);
         ArgumentNullException.ThrowIfNull(_windowHeight);
 
-        foreach (var m in _meteorites)
-            m.Update(_windowWidth.Value, _windowHeight.Value);
-
-        foreach (var p in _projectiles)
-            p.Update(_windowWidth.Value, _windowHeight.Value);
-
-        HandleBodyDespawn();
+        UpdateBodies();
+        HandleBodyDespawns();
+        HandleBodyCollisions();
     }
 
     public IEnumerable<MovingBody> GetMeteorites() => _meteorites;
     public IEnumerable<MovingBody> GetProjectiles() => _projectiles;
 
-    private void HandleBodyDespawn()
+    private void UpdateBodies()
+    {
+        foreach (var m in _meteorites)
+            m.Update(_windowWidth.Value, _windowHeight.Value);
+
+        foreach (var p in _projectiles)
+            p.Update(_windowWidth.Value, _windowHeight.Value);
+    }
+
+    private void HandleBodyDespawns()
     {
         _meteorites.RemoveWhere(m => m.Despawn);
         _projectiles.RemoveWhere(p => p.Despawn);
+    }
+
+    private void HandleBodyCollisions()
+    {
+        
     }
 }

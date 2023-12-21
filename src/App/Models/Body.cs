@@ -2,7 +2,7 @@ using Velaptor.Graphics;
 
 namespace App.Models;
 
-public abstract class Body {
+public class Body {
     protected CircleShape _shape;
 
     public Guid Id { get; }
@@ -19,7 +19,7 @@ public abstract class Body {
         if (obj is null || obj.GetType() != GetType())
             return false;
 
-        var other = (MovingBody)obj;
+        var other = (Body)obj;
 
         return Id.Equals(other.Id);
     }
