@@ -47,7 +47,7 @@ public class MovingBodyTests
 
         // Assert
         _sut.Shape.Position.Should().Be(updatedPositionExpected);
-        _sut.Despawn.Should().BeFalse();
+        _sut.Despawned.Should().BeFalse();
     }
 
     [TestCase(50F, 0F)]
@@ -71,6 +71,6 @@ public class MovingBodyTests
         _sut.Update(windowWidth, windowHeight);
 
         // Assert
-        _sut.Despawn.Should().BeTrue();
+        _sut.Despawned.Should().BeTrue();
     }
 }

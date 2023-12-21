@@ -9,6 +9,7 @@ public class Model
     private readonly HashSet<MovingBody> _meteorites = new();
     private readonly HashSet<Projectile> _projectiles = new();
     private readonly BodyBuilder _bodyBuilder;
+    public uint Score { get; private set; } = 0;
 
     public Model(BodyBuilder bodyBuilder)
     {
@@ -30,8 +31,8 @@ public class Model
         ArgumentNullException.ThrowIfNull(_windowHeight);
 
         UpdateBodies();
-        HandleBodyDespawns();
         HandleBodyCollisions();
+        HandleBodyDespawns();
     }
 
     public IEnumerable<MovingBody> GetMeteorites() => _meteorites;
@@ -48,12 +49,21 @@ public class Model
 
     private void HandleBodyDespawns()
     {
-        _meteorites.RemoveWhere(m => m.Despawn);
-        _projectiles.RemoveWhere(p => p.Despawn);
+        _meteorites.RemoveWhere(m => m.Despawned);
+        _projectiles.RemoveWhere(p => p.Despawned);
     }
 
     private void HandleBodyCollisions()
     {
-        
+        foreach (var projectile in _projectiles)
+            foreach (var meteorite in _meteorites)
+                if (projectile.HasCollided(meteorite))
+                {
+                    projectile.Despawn();
+                    meteorite.Despawn();
+                    IncreaseScore();
+                }
     }
+
+    private void IncreaseScore() => Score += 1;
 }

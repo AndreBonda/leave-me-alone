@@ -7,9 +7,7 @@ public class MovingBody : Body
 {
     private Vector2 _vector;
 
-    public bool Despawn { get; private set; }
-    public float X => _shape.Position.X;
-    public float Y => _shape.Position.Y;
+    public bool Despawned { get; private set; }
 
     public MovingBody(CircleShape shape, Vector2 vector) : base(shape)
     {
@@ -25,13 +23,14 @@ public class MovingBody : Body
         HandleDespawn(windowWidth, windowHeight);
     }
 
+    public void Despawn() => Despawned = true;
+
     private void HandleDespawn(uint windowWidth, uint windowHeight)
     {
-        if (IsOutOfWindowTop() || IsOutOfWindowRight(windowWidth) 
+        if (IsOutOfWindowTop() || IsOutOfWindowRight(windowWidth)
             || IsOutOfWindowBottom(windowHeight) || IsOutOfWindowLeft())
         {
-            Console.WriteLine("Despawn!");
-            Despawn = true;
+            Despawn();
         }
     }
 
