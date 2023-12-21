@@ -33,10 +33,11 @@ public class ControllerTests
             _model,
             Substitute.For<IFontRenderer>(),
             Substitute.For<IShapeRenderer>(),
+            Substitute.For<ITextureRenderer>(),
             Substitute.For<IBatcher>()
         );
 
-        _sut = new Controller(_model, _view, Substitute.For<IAppInput<MouseState>>(), Substitute.For<ILoader<IFont>>());
+        _sut = new Controller(_model, _view, Substitute.For<IAppInput<MouseState>>(), Substitute.For<ILoader<IFont>>(), Substitute.For<ILoader<ITexture>>());
     }
 
     [Test]
