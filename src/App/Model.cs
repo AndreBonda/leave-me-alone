@@ -7,7 +7,7 @@ public class Model
     private uint? _windowWidth;
     private uint? _windowHeight;
     private readonly HashSet<MovingBody> _meteorites = new();
-    private readonly HashSet<Projectile> _projectiles = new();
+    private readonly HashSet<MovingBody> _projectiles = new();
     private readonly BodyBuilder _bodyBuilder;
     public uint Score { get; private set; } = 0;
 

@@ -20,7 +20,7 @@ public class BodyBuilder
         return new MovingBody(GenerateRandomCircleShape(side, windowWidth, windowHeight), GenerateRandomVector(side));
     }
 
-    public Projectile BuildNewProjectile(uint windowWidth, uint windowHeight, (int X, int Y) userClickCC)
+    public MovingBody BuildNewProjectile(uint windowWidth, uint windowHeight, (int X, int Y) userClickCC)
     {
         (uint X, uint Y) originCC = new(windowWidth / 2, windowHeight / 2);
         int vxSign = userClickCC.X < originCC.X ? -1 : 1;
@@ -31,15 +31,14 @@ public class BodyBuilder
         var vx = (float)Math.Cos(alpha) * GameParameters.PROJECTILE_MAGNITUDE;
         var vy = (float)Math.Sin(alpha) * GameParameters.PROJECTILE_MAGNITUDE;
 
-        return new Projectile(
+        return new MovingBody(
             shape: new CircleShape()
             {
                 Radius = GameParameters.PROJECTILE_RADIUS,
                 Position = new(originCC.X, originCC.Y),
                 Color = GameParameters.PROJECTILE_COLOR
             },
-            vector: new Vector2(vx, vy),
-            GameParameters.PROJECTILE_TRAIL_MAX_LENGTH
+            vector: new Vector2(vx, vy)
         );
     }
 
