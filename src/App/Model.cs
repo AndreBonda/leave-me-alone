@@ -1,6 +1,6 @@
-using Velaptor.Graphics;
+using App.Models;
 
-namespace App.Models;
+namespace App;
 
 public class Model
 {
