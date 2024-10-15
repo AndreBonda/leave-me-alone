@@ -2,6 +2,7 @@ using App.Models;
 using Velaptor;
 using Velaptor.Content;
 using Velaptor.Content.Fonts;
+using Velaptor.ExtensionMethods;
 using Velaptor.Input;
 
 namespace App;
@@ -33,7 +34,7 @@ public class Controller
     {
         _model.InitWindowSize(windowWidth, windowHeight);
         _view.InitWindowSize(windowWidth, windowHeight);
-        _view.Font = _fontLoader.Load("TimesNewRoman-Regular|size:12");
+        _view.Font = _fontLoader.Load("TimesNewRoman-Regular", 11);
         _view.MascotTexture = _textureLoader.Load("velaptor_mascot");
     }
 
