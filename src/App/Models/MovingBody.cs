@@ -9,16 +9,15 @@ public class MovingBody : Body
 
     public bool Despawned { get; private set; }
 
-    public MovingBody(CircleShape shape, Vector2 vector) : base(shape)
+    public MovingBody(float radius, (float X, float Y) position, Vector2 vector) : base(radius, position)
     {
         _vector = vector;
     }
 
     public virtual void Update(uint windowWidth, uint windowHeight)
     {
-        _shape.Position = new Vector2(
-            x: _shape.Position.X + _vector.X,
-            y: _shape.Position.Y + _vector.Y);
+        X += _vector.X;
+        Y += _vector.Y;
 
         HandleDespawn(windowWidth, windowHeight);
     }
@@ -35,14 +34,14 @@ public class MovingBody : Body
     }
 
     private bool IsOutOfWindowLeft()
-        => X < 0 && Math.Abs(X) > _shape.Radius;
+        => X < 0 && Math.Abs(X) > Radius;
 
     private bool IsOutOfWindowRight(uint windowWidth)
-        => X > windowWidth && (X - windowWidth) > _shape.Radius;
+        => X > windowWidth && (X - windowWidth) > Radius;
 
     private bool IsOutOfWindowTop()
-        => Y < 0 && Math.Abs(Y) > _shape.Radius;
+        => Y < 0 && Math.Abs(Y) > Radius;
 
     private bool IsOutOfWindowBottom(uint windowHeight)
-        => Y > windowHeight && (Y - windowHeight) > _shape.Radius;
+        => Y > windowHeight && (Y - windowHeight) > Radius;
 }

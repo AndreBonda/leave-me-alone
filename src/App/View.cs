@@ -74,7 +74,7 @@ public class View
     {
         foreach (var m in _model.GetMeteorites())
         {
-            _renderer.Render(m.Shape);
+            //_renderer.Render(m.Shape);
         }
 
     }
@@ -82,7 +82,9 @@ public class View
     private void RenderProjectiles()
     {
         foreach (var p in _model.GetProjectiles())
-            _renderer.Render(p.Shape);
+        {
+            //_renderer.Render(p.Shape);
+        }
     }
 
     private void RenderScore()

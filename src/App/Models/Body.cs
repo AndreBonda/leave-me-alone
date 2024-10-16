@@ -3,18 +3,17 @@ using Velaptor.Graphics;
 namespace App.Models;
 
 public class Body {
-    protected CircleShape _shape;
-
     public Guid Id { get; }
-    public CircleShape Shape => _shape;
-    public float X => _shape.Position.X;
-    public float Y => _shape.Position.Y;
-    public float Radius => _shape.Radius;
+    public float X { get; protected set; }
+    public float Y { get; protected set; }
+    public float Radius { get; }
 
-    public Body(CircleShape shape)
+    public Body(float radius, (float X, float Y) position)
     {
         Id = Guid.NewGuid();
-        _shape = shape;
+        Radius = radius;
+        X = position.X;
+        Y = position.Y;
     }
 
     public bool HasCollided(Body body)

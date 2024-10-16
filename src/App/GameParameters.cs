@@ -10,6 +10,5 @@ public static class GameParameters
     public const int MIN_METEORITE_RADIUS = 5;
     public const int PROJECTILE_MAGNITUDE = 10;
     public const float PROJECTILE_RADIUS = 5;
-    public static readonly Color PROJECTILE_COLOR = Color.RebeccaPurple;
 
 }

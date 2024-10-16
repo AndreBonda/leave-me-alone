@@ -14,12 +14,7 @@ public class BodyTests
     [SetUp]
     public void SetUp()
     {
-        _sut = new Body(
-                new CircleShape()
-                {
-                    Radius = 20,
-                    Position = new Vector2(0, 0),
-                });
+        _sut = new Body(radius: 20, position: new (0, 0));
     }
 
     [Test]
@@ -59,14 +54,7 @@ public class BodyTests
     public void Equals_WithDifferentBodyAsParameter_ReturnsFalse()
     {
         // Arrange
-        var anotherBody = new Body(
-            new CircleShape()
-            {
-                Radius = 20,
-                Position = new Vector2(0, 2),
-                Color = Color.Blue,
-                IsSolid = true
-            });
+        var anotherBody = new Body(radius: 20, position: new (0, 2));
 
         // Act
         var actual = _sut.Equals(anotherBody);
@@ -92,20 +80,8 @@ public class BodyTests
     public void HasCollided_WhenThereIsNotACollision_ReturnsFalse()
     {
         // Arrange
-        var b1 = new Body(
-            new CircleShape
-            {
-                Radius = 10,
-                Position = new Vector2(10, 10)
-            }
-        );
-        var b2 = new Body(
-            new CircleShape
-            {
-                Radius = 10,
-                Position = new Vector2(50, 50)
-            }
-        );
+        var b1 = new Body(10, new (10, 10));
+        var b2 = new Body(10, new (50, 50));
 
         // Act
         var result = b1.HasCollided(b2);
@@ -121,20 +97,8 @@ public class BodyTests
     )
     {
         // Arrange
-        var b1 = new Body(
-            new CircleShape
-            {
-                Radius = 10,
-                Position = new Vector2(b1X, b1Y)
-            }
-        );
-        var b2 = new Body(
-            new CircleShape
-            {
-                Radius = 10,
-                Position = new Vector2(b2X, b2Y)
-            }
-        );
+        var b1 = new Body(10, new (b1X, b1Y));
+        var b2 = new Body(10,new (b2X, b2Y));
 
         // Act
         var result = b1.HasCollided(b2);

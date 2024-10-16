@@ -17,7 +17,14 @@ public class BodyBuilder
     public MovingBody BuildNewMeteorite(uint windowWidth, uint windowHeight)
     {
         var side = RandomSide();
-        return new MovingBody(GenerateRandomCircleShape(side, windowWidth, windowHeight), GenerateRandomVector(side));
+        return new MovingBody(
+            radius: RandomMeteoriteRadius(),
+            position: RandomInitialPosition(
+                side,
+                windowWidth,
+                windowHeight),
+            GenerateRandomVector(side)
+        );
     }
 
     public MovingBody BuildNewProjectile(uint windowWidth, uint windowHeight, (int X, int Y) userClickCC)
@@ -32,12 +39,8 @@ public class BodyBuilder
         var vy = (float)Math.Sin(alpha) * GameParameters.PROJECTILE_MAGNITUDE;
 
         return new MovingBody(
-            shape: new CircleShape()
-            {
-                Radius = GameParameters.PROJECTILE_RADIUS,
-                Position = new(originCC.X, originCC.Y),
-                Color = GameParameters.PROJECTILE_COLOR
-            },
+            radius: GameParameters.PROJECTILE_RADIUS,
+            position: new(originCC.X, originCC.Y),
             vector: new Vector2(vx, vy)
         );
     }
@@ -47,14 +50,6 @@ public class BodyBuilder
         var random = _rnd.Next(GameParameters.NUMBER_OF_SIDE);
         return (Sides)random;
     }
-
-    private CircleShape GenerateRandomCircleShape(Sides side, uint windowWidth, uint windowHeight) =>
-        new()
-        {
-            Radius = RandomMeteoriteRadius(),
-            Position = RandomInitialPosition(side, windowWidth, windowHeight),
-            Color = RandomColor(),
-        };
 
     private Vector2 GenerateRandomVector(Sides side) =>
         side switch
@@ -66,12 +61,10 @@ public class BodyBuilder
             _ => throw new ArgumentException($"Invalid side value {side}")
         };
 
-    private Color RandomColor() => Color.FromArgb(red: _rnd.Next(256), green: _rnd.Next(256), blue: _rnd.Next(256));
-
     private float RandomMeteoriteRadius() =>
         _rnd.RandomFloat(GameParameters.MIN_METEORITE_RADIUS, GameParameters.MAX_METEORITE_RADIUS);
 
-    private Vector2 RandomInitialPosition(Sides side, uint windowWidth, uint windowHeight) =>
+    private (float X, float Y) RandomInitialPosition(Sides side, uint windowWidth, uint windowHeight) =>
         side switch
         {
             Sides.TOP => new(_rnd.RandomFloat(0, windowWidth), 0),
