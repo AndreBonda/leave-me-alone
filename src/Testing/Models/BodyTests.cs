@@ -14,7 +14,17 @@ public class BodyTests
     [SetUp]
     public void SetUp()
     {
-        _sut = new Body(radius: 20, position: new (0, 0));
+        _sut = new Body(radius: 20, position: new (10, 20), angle: 15);
+    }
+
+    [Test]
+    public void Contructor_BuildsBodyWithExpectedValues()
+    {
+        // Assert
+        _sut.Radius.Should().Be(20f);
+        _sut.X.Should().Be(10f);
+        _sut.Y.Should().Be(20f);
+        _sut.Angle.Should().Be(15f);
     }
 
     [Test]

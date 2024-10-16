@@ -6,14 +6,16 @@ public class Body {
     public Guid Id { get; }
     public float X { get; protected set; }
     public float Y { get; protected set; }
+    public float Angle { get; protected set; }
     public float Radius { get; }
 
-    public Body(float radius, (float X, float Y) position)
+    public Body(float radius, (float X, float Y) position, float angle = 0)
     {
         Id = Guid.NewGuid();
         Radius = radius;
         X = position.X;
         Y = position.Y;
+        Angle = angle;
     }
 
     public bool HasCollided(Body body)

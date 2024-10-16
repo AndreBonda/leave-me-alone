@@ -35,11 +35,11 @@ public class BodyBuilder
         var x = Math.Abs(originCC.X - userClickCC.X) * vxSign;
         var y = Math.Abs(originCC.Y - userClickCC.Y) * vySign;
         var alpha = Math.Atan2(y, x);
-        var vx = (float)Math.Cos(alpha) * GameParameters.PROJECTILE_MAGNITUDE;
-        var vy = (float)Math.Sin(alpha) * GameParameters.PROJECTILE_MAGNITUDE;
+        var vx = (float)Math.Cos(alpha) * GameParameters.ProjectileMagnitude;
+        var vy = (float)Math.Sin(alpha) * GameParameters.ProjectileMagnitude;
 
         return new MovingBody(
-            radius: GameParameters.PROJECTILE_RADIUS,
+            radius: GameParameters.ProjectileRadius,
             position: new(originCC.X, originCC.Y),
             vector: new Vector2(vx, vy)
         );
@@ -47,22 +47,22 @@ public class BodyBuilder
 
     private Sides RandomSide()
     {
-        var random = _rnd.Next(GameParameters.NUMBER_OF_SIDE);
+        var random = _rnd.Next(GameParameters.NumberOfSide);
         return (Sides)random;
     }
 
     private Vector2 GenerateRandomVector(Sides side) =>
         side switch
         {
-            Sides.TOP => new(_rnd.RandomFloat(-GameParameters.MAX_V, GameParameters.MAX_V), _rnd.RandomFloat(0, GameParameters.MAX_V)),
-            Sides.RIGHT => new(_rnd.RandomFloat(-GameParameters.MAX_V, 0), _rnd.RandomFloat(-GameParameters.MAX_V, GameParameters.MAX_V)),
-            Sides.BOTTOM => new(_rnd.RandomFloat(-GameParameters.MAX_V, GameParameters.MAX_V), _rnd.RandomFloat(-GameParameters.MAX_V, 0)),
-            Sides.LEFT => new(_rnd.RandomFloat(0, GameParameters.MAX_V), _rnd.RandomFloat(-GameParameters.MAX_V, GameParameters.MAX_V)),
+            Sides.TOP => new(_rnd.RandomFloat(-GameParameters.MaxV, GameParameters.MaxV), _rnd.RandomFloat(0, GameParameters.MaxV)),
+            Sides.RIGHT => new(_rnd.RandomFloat(-GameParameters.MaxV, 0), _rnd.RandomFloat(-GameParameters.MaxV, GameParameters.MaxV)),
+            Sides.BOTTOM => new(_rnd.RandomFloat(-GameParameters.MaxV, GameParameters.MaxV), _rnd.RandomFloat(-GameParameters.MaxV, 0)),
+            Sides.LEFT => new(_rnd.RandomFloat(0, GameParameters.MaxV), _rnd.RandomFloat(-GameParameters.MaxV, GameParameters.MaxV)),
             _ => throw new ArgumentException($"Invalid side value {side}")
         };
 
     private float RandomMeteoriteRadius() =>
-        _rnd.RandomFloat(GameParameters.MIN_METEORITE_RADIUS, GameParameters.MAX_METEORITE_RADIUS);
+        _rnd.RandomFloat(GameParameters.MinMeteoriteRadius, GameParameters.MaxMeteoriteRadius);
 
     private (float X, float Y) RandomInitialPosition(Sides side, uint windowWidth, uint windowHeight) =>
         side switch

@@ -110,10 +110,10 @@ public class BodyBuilderTests
         actual.Y.Should().Be(expectedY);
     }
 
-    [TestCase(Sides.TOP, -GameParameters.MAX_V, GameParameters.MAX_V, 0, GameParameters.MAX_V)]
-    [TestCase(Sides.RIGHT, -GameParameters.MAX_V, 0, -GameParameters.MAX_V, GameParameters.MAX_V)]
-    [TestCase(Sides.BOTTOM, -GameParameters.MAX_V, GameParameters.MAX_V, -GameParameters.MAX_V, 0)]
-    [TestCase(Sides.LEFT, 0, GameParameters.MAX_V, -GameParameters.MAX_V, GameParameters.MAX_V)]
+    [TestCase(Sides.TOP, -GameParameters.MaxV, GameParameters.MaxV, 0, GameParameters.MaxV)]
+    [TestCase(Sides.RIGHT, -GameParameters.MaxV, 0, -GameParameters.MaxV, GameParameters.MaxV)]
+    [TestCase(Sides.BOTTOM, -GameParameters.MaxV, GameParameters.MaxV, -GameParameters.MaxV, 0)]
+    [TestCase(Sides.LEFT, 0, GameParameters.MaxV, -GameParameters.MaxV, GameParameters.MaxV)]
     public void BuildNewMeteorite_WhenInvoked_CallsRandomFloatWithCorrectParameters(
         Sides windowSide, int minValueX, int maxValueX, int minValueY, int maxValueY)
     {
@@ -128,7 +128,7 @@ public class BodyBuilderTests
         _rnd.Received().RandomFloat(minValueY, maxValueY);
     }
 
-    [TestCase(100u, 80u, GameParameters.PROJECTILE_RADIUS, 50F, 40F)]
+    [TestCase(100u, 80u, GameParameters.ProjectileRadius, 50F, 40F)]
     public void BuildNewProjectile_WhenInvoked_ReturnsAProjectileWithExpectedProperties(
         uint windowWidth,
         uint windowHeight,

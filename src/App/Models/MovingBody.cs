@@ -6,10 +6,9 @@ namespace App.Models;
 public class MovingBody : Body
 {
     private Vector2 _vector;
-
     public bool Despawned { get; private set; }
 
-    public MovingBody(float radius, (float X, float Y) position, Vector2 vector) : base(radius, position)
+    public MovingBody(float radius, (float X, float Y) position, Vector2 vector, float angle = 0) : base(radius, position, angle)
     {
         _vector = vector;
     }

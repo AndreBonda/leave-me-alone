@@ -57,8 +57,8 @@ public class View
     {
         _batcher.Begin();
         RenderMascot();
-        RenderMeteorites();
-        RenderProjectiles();
+        // RenderMeteorites();
+        // RenderProjectiles();
         RenderScore();
         _batcher.End();
     }
@@ -74,6 +74,7 @@ public class View
     {
         foreach (var m in _model.GetMeteorites())
         {
+
             //_renderer.Render(m.Shape);
         }
 
