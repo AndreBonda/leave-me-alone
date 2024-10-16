@@ -1,5 +1,4 @@
 using System.Numerics;
-using Velaptor.Graphics;
 
 namespace App.Models;
 

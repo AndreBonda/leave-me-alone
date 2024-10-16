@@ -44,13 +44,15 @@ public class View
         _windowWidth = windowWidth;
         _windowHeight = windowHeight;
         Font = _fontLoader.Load("TimesNewRoman-Regular", 11);
-        MascotTexture = _textureLoader.Load("velaptor_mascot");
+        // MascotTexture = _textureLoader.Load("velaptor_mascot");
+        MascotTexture = _textureLoader.Load("meteorite");
     }
 
     public void UnloadView()
     {
         _fontLoader.Unload("TimesNewRoman-Regular");
-        _textureLoader.Unload("velaptor-mascot");
+        // _textureLoader.Unload("velaptor-mascot");
+        _textureLoader.Unload("meteorite");
     }
 
     public void RenderGame()

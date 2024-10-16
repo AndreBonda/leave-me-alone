@@ -1,5 +1,3 @@
-using Velaptor.Graphics;
-
 namespace App.Models;
 
 public class Body {

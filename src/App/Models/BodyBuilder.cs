@@ -14,10 +14,10 @@ public class BodyBuilder
         _rnd = rnd;
     }
 
-    public MovingBody BuildNewMeteorite(uint windowWidth, uint windowHeight)
+    public Meteorite BuildNewMeteorite(uint windowWidth, uint windowHeight)
     {
         var side = RandomSide();
-        return new MovingBody(
+        return new Meteorite(
             radius: RandomMeteoriteRadius(),
             position: RandomInitialPosition(
                 side,
