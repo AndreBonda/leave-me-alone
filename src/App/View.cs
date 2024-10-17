@@ -21,8 +21,11 @@ public class View
     private readonly IBatcher _batcher;
     private readonly ILoader<IFont> _fontLoader;
     private readonly ILoader<ITexture> _textureLoader;
-    public IFont Font { get; set; }
-    public ITexture MascotTexture { get; set; }
+    private IFont _font;
+    private ITexture _mascotTexture;
+    private ITexture _smallMeteoriteTexture;
+    private ITexture _mediumMeteoriteTexture;
+    private ITexture _largeMeteoriteTexture;
 
     public View(
         Model model,
@@ -45,16 +48,20 @@ public class View
     {
         _windowWidth = windowWidth;
         _windowHeight = windowHeight;
-        Font = _fontLoader.Load("TimesNewRoman-Regular", 11);
-        // MascotTexture = _textureLoader.Load("velaptor_mascot");
-        MascotTexture = _textureLoader.Load("meteorite");
+        _font = _fontLoader.Load(GameResources.FontName, 11);
+        _mascotTexture = _textureLoader.Load(GameResources.MascotImageName);
+        _smallMeteoriteTexture = _textureLoader.Load(GameResources.SmallMeteoriteImageName);
+        _mediumMeteoriteTexture = _textureLoader.Load(GameResources.MediumMeteoriteImageName);
+        _largeMeteoriteTexture = _textureLoader.Load(GameResources.LargeMeteoriteImageName);
     }
 
     public void UnloadView()
     {
-        _fontLoader.Unload("TimesNewRoman-Regular");
-        // _textureLoader.Unload("velaptor-mascot");
-        _textureLoader.Unload("meteorite");
+        _fontLoader.Unload(GameResources.FontName);
+        _textureLoader.Unload(GameResources.MascotImageName);
+        _textureLoader.Unload(GameResources.SmallMeteoriteImageName);
+        _textureLoader.Unload(GameResources.MediumMeteoriteImageName);
+        _textureLoader.Unload(GameResources.LargeMeteoriteImageName);
     }
 
     public void RenderGame()
@@ -62,7 +69,7 @@ public class View
         _batcher.Begin();
         RenderMascot();
         RenderMeteorites();
-        // RenderProjectiles();
+        RenderProjectiles();
         RenderScore();
         _batcher.End();
     }
@@ -71,18 +78,14 @@ public class View
     {
         var x = (int)(_windowWidth / 2);
         var y = (int)(_windowHeight / 2);
-        _textureRenderer.Render(MascotTexture, x, y);
+        _textureRenderer.Render(_mascotTexture, x, y);
     }
 
     private void RenderMeteorites()
     {
         foreach (var m in _model.GetMeteorites())
         {
-            _renderer.Render(new CircleShape()
-            {
-                Diameter = m.Radius * 2,
-                Position = new Vector2(m.X, m.Y)
-            });
+            _textureRenderer.Render(GetMeteoriteTexture(m.Size), (int)m.X, (int)m.Y, m.Angle);
         }
 
     }
@@ -91,13 +94,25 @@ public class View
     {
         foreach (var p in _model.GetProjectiles())
         {
-            //_renderer.Render(p.Shape);
+            _renderer.Render(new CircleShape()
+            {
+                Diameter = p.Radius * 2,
+                Position = new Vector2(p.X, p.Y)
+            });
         }
     }
 
     private void RenderScore()
     {
         uint score = _model.Score;
-        _fontRenderer.Render(Font, $"Score: {score}", 70, 10, Color.White);
+        _fontRenderer.Render(_font, $"Score: {score}", 70, 10, Color.White);
     }
+
+    private ITexture GetMeteoriteTexture(BodySize size) => size switch
+    {
+        BodySize.Small => _smallMeteoriteTexture,
+        BodySize.Medium => _mediumMeteoriteTexture,
+        BodySize.Large => _largeMeteoriteTexture,
+        _ => throw new ArgumentOutOfRangeException(nameof(size), "Size not valid")
+    };
 }

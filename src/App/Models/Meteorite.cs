@@ -4,6 +4,7 @@ namespace App.Models;
 
 public class Meteorite : MovingBody
 {
+    private int _updateNumber = 1;
     public BodySize Size { get; set; }
 
     public Meteorite(BodySize size, (float X, float Y) position, Vector2 vector, float angle = 0)
@@ -14,7 +15,12 @@ public class Meteorite : MovingBody
 
     public override void Update(uint windowWidth, uint windowHeight)
     {
-        Angle += GameParameters.MeteoriteRotationAngleDegrees;
+        if (_updateNumber == GameParameters.MeteoriteRotationSpeed)
+        {
+            Angle += GameParameters.MeteoriteRotationAngleDegrees;
+            _updateNumber = 0;
+        }
+        _updateNumber++;
 
         if (Angle >= 360)
         {

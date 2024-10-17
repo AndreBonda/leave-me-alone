@@ -35,7 +35,7 @@ public class Model
         HandleBodyDespawns();
     }
 
-    public IEnumerable<MovingBody> GetMeteorites() => _meteorites;
+    public IEnumerable<Meteorite> GetMeteorites() => _meteorites;
     public IEnumerable<MovingBody> GetProjectiles() => _projectiles;
 
     private void UpdateBodies()
