@@ -15,11 +15,19 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Content\Graphics\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <None Update="Content\Graphics\velaptor_mascot.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Content\Graphics\meteorite.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Content\Graphics\meteorite-large.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Content\Graphics\meteorite-medium.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Content\Graphics\meteorite-small.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>

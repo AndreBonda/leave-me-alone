@@ -1,20 +1,19 @@
-using Velaptor.Graphics;
-
 namespace App.Models;
 
 public class Body {
-    protected CircleShape _shape;
-
     public Guid Id { get; }
-    public CircleShape Shape => _shape;
-    public float X => _shape.Position.X;
-    public float Y => _shape.Position.Y;
-    public float Radius => _shape.Radius;
+    public float X { get; protected set; }
+    public float Y { get; protected set; }
+    public float Angle { get; protected set; }
+    public float Radius { get; }
 
-    public Body(CircleShape shape)
+    public Body(float radius, (float X, float Y) position, float angle = 0)
     {
         Id = Guid.NewGuid();
-        _shape = shape;
+        X = position.X;
+        Y = position.Y;
+        Angle = angle;
+        Radius = radius;
     }
 
     public bool HasCollided(Body body)

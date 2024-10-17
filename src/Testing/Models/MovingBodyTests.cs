@@ -15,14 +15,9 @@ public class MovingBodyTests
     public void SetUp()
     {
         _sut = new MovingBody(
-                new CircleShape()
-                {
-                    Radius = 20,
-                    Position = new Vector2(0, 0),
-                    Color = Color.Blue,
-                    IsSolid = true
-                },
-                new Vector2(5, 5));
+            radius: 20,
+            position: new (0, 0),
+            vector: new Vector2(5, 5));
     }
 
     [Test]
@@ -33,20 +28,16 @@ public class MovingBodyTests
         uint windowHeight = 100;
 
         _sut = new MovingBody(
-            new CircleShape()
-            {
-                Radius = 20,
-                Position = new Vector2(30, 30),
-            },
-            new Vector2(5, 5));
-
-        var updatedPositionExpected = new Vector2(35, 35);
+            radius:20,
+            position: new (30, 30),
+            vector: new Vector2(5, 5));
 
         // Act
         _sut.Update(windowWidth, windowHeight);
 
         // Assert
-        _sut.Shape.Position.Should().Be(updatedPositionExpected);
+        _sut.X.Should().Be(35);
+        _sut.Y.Should().Be(35);
         _sut.Despawned.Should().BeFalse();
     }
 
@@ -60,12 +51,9 @@ public class MovingBodyTests
         uint windowWidth = 10;
         uint windowHeight = 10;
         _sut = new MovingBody(
-            new CircleShape()
-            {
-                Radius = 20,
-                Position = new Vector2(bodyPositionX, bodyPositionY),
-            },
-            new Vector2(5, 5));
+            radius: 20,
+            position: new (bodyPositionX, bodyPositionY),
+            vector: new Vector2(5, 5));
 
         // Act
         _sut.Update(windowWidth, windowHeight);

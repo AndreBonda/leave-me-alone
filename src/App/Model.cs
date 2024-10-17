@@ -6,8 +6,8 @@ public class Model
 {
     private uint? _windowWidth;
     private uint? _windowHeight;
-    private readonly HashSet<MovingBody> _meteorites = new();
-    private readonly HashSet<Projectile> _projectiles = new();
+    private readonly HashSet<Meteorite> _meteorites = new();
+    private readonly HashSet<MovingBody> _projectiles = new();
     private readonly BodyBuilder _bodyBuilder;
     public uint Score { get; private set; } = 0;
 
@@ -35,7 +35,7 @@ public class Model
         HandleBodyDespawns();
     }
 
-    public IEnumerable<MovingBody> GetMeteorites() => _meteorites;
+    public IEnumerable<Meteorite> GetMeteorites() => _meteorites;
     public IEnumerable<MovingBody> GetProjectiles() => _projectiles;
 
     private void UpdateBodies()

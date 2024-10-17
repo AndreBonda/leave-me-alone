@@ -24,42 +24,12 @@ public class BodyBuilderTests
     }
 
     [Test]
-    public void BuildNewMeteorite_WhenInvoked_ReturnsABodyWithExpectedRadius()
-    {
-        // Arrange
-        float expectedRadius = 20f;
-        _rnd.RandomFloat(default, default).ReturnsForAnyArgs(expectedRadius);
-
-        // Act
-        var actual = _sut.BuildNewMeteorite(windowWidth, windowHeight);
-
-        // Assert
-        actual.Shape.Radius.Should()
-            .BeApproximately(expectedRadius, 0.1f);
-    }
-
-    [Test]
-    public void BuildNewMeteorite_WhenInvoked_ReturnsABodyWithExpectedColor()
-    {
-        // Arrange
-        var expectedColor = Color.FromArgb(100, 100, 100);
-        _rnd.Next(256).Returns(100);
-        _rnd.Next(4).Returns(0);
-
-        // Act
-        var actual = _sut.BuildNewMeteorite(windowWidth, windowHeight);
-
-        // Assert
-        actual.Shape.Color.Should().Be(expectedColor);
-    }
-
-    [Test]
     public void BuildNewMeteorite_WhenInvoked_ReturnsABodyWithExpectedPositionAtTopWindowSide()
     {
         // Arrange
         float expectedX = 75;
         float expectedY = 0;
-        _rnd.Next(default).ReturnsForAnyArgs((int)Sides.TOP);
+        _rnd.GetRandomSide().Returns(Sides.TOP);
         _rnd.RandomFloat(default, default).ReturnsForAnyArgs(expectedX);
 
         // Act
@@ -67,8 +37,8 @@ public class BodyBuilderTests
 
         // Assert
         _rnd.Received().RandomFloat(0, windowWidth);
-        actual.Shape.Position.X.Should().Be(expectedX);
-        actual.Shape.Position.Y.Should().Be(expectedY);
+        actual.X.Should().Be(expectedX);
+        actual.Y.Should().Be(expectedY);
     }
 
     [Test]
@@ -77,7 +47,7 @@ public class BodyBuilderTests
         // Arrange
         float expectedX = windowWidth;
         float expectedY = 50;
-        _rnd.Next(default).ReturnsForAnyArgs((int)Sides.RIGHT);
+        _rnd.GetRandomSide().Returns(Sides.RIGHT);
         _rnd.RandomFloat(default, default).ReturnsForAnyArgs(expectedY);
 
         // Act
@@ -85,8 +55,8 @@ public class BodyBuilderTests
 
         // Assert
         _rnd.Received().RandomFloat(0, windowHeight);
-        actual.Shape.Position.X.Should().Be(expectedX);
-        actual.Shape.Position.Y.Should().Be(expectedY);
+        actual.X.Should().Be(expectedX);
+        actual.Y.Should().Be(expectedY);
     }
 
     [Test]
@@ -95,7 +65,7 @@ public class BodyBuilderTests
         // Arrange
         float expectedX = 75;
         float expectedY = windowHeight;
-        _rnd.Next(default).ReturnsForAnyArgs((int)Sides.BOTTOM);
+        _rnd.GetRandomSide().Returns(Sides.BOTTOM);
         _rnd.RandomFloat(default, default).ReturnsForAnyArgs(expectedX);
 
         // Act
@@ -103,8 +73,8 @@ public class BodyBuilderTests
 
         // Assert
         _rnd.Received().RandomFloat(0, windowWidth);
-        actual.Shape.Position.X.Should().Be(expectedX);
-        actual.Shape.Position.Y.Should().Be(expectedY);
+        actual.X.Should().Be(expectedX);
+        actual.Y.Should().Be(expectedY);
     }
 
     [Test]
@@ -113,7 +83,7 @@ public class BodyBuilderTests
         // Arrange
         float expectedX = 0;
         float expectedY = 50;
-        _rnd.Next(default).ReturnsForAnyArgs((int)Sides.LEFT);
+        _rnd.GetRandomSide().Returns(Sides.LEFT);
         _rnd.RandomFloat(default, default).ReturnsForAnyArgs(expectedY);
 
         // Act
@@ -121,29 +91,11 @@ public class BodyBuilderTests
 
         // Assert
         _rnd.Received().RandomFloat(0, windowHeight);
-        actual.Shape.Position.X.Should().Be(expectedX);
-        actual.Shape.Position.Y.Should().Be(expectedY);
+        actual.X.Should().Be(expectedX);
+        actual.Y.Should().Be(expectedY);
     }
 
-    [TestCase(Sides.TOP, -GameParameters.MAX_V, GameParameters.MAX_V, 0, GameParameters.MAX_V)]
-    [TestCase(Sides.RIGHT, -GameParameters.MAX_V, 0, -GameParameters.MAX_V, GameParameters.MAX_V)]
-    [TestCase(Sides.BOTTOM, -GameParameters.MAX_V, GameParameters.MAX_V, -GameParameters.MAX_V, 0)]
-    [TestCase(Sides.LEFT, 0, GameParameters.MAX_V, -GameParameters.MAX_V, GameParameters.MAX_V)]
-    public void BuildNewMeteorite_WhenInvoked_CallsRandomFloatWithCorrectParameters(
-        Sides windowSide, int minValueX, int maxValueX, int minValueY, int maxValueY)
-    {
-        // Arrange
-        _rnd.Next(default).ReturnsForAnyArgs((int)windowSide);
-
-        // Act
-        _sut.BuildNewMeteorite(windowWidth, windowHeight);
-
-        // Assert
-        _rnd.Received().RandomFloat(minValueX, maxValueX);
-        _rnd.Received().RandomFloat(minValueY, maxValueY);
-    }
-
-    [TestCase(100u, 80u, GameParameters.PROJECTILE_RADIUS, 50F, 40F)]
+    [TestCase(100u, 80u, GameParameters.ProjectileRadius, 50F, 40F)]
     public void BuildNewProjectile_WhenInvoked_ReturnsAProjectileWithExpectedProperties(
         uint windowWidth,
         uint windowHeight,
@@ -156,9 +108,9 @@ public class BodyBuilderTests
         var actual = _sut.BuildNewProjectile(windowWidth, windowHeight, new(20, 20));
 
         // Assert
-        actual.Shape.Radius.Should().Be(expectedRadius);
-        actual.Shape.Position.X.Should().BeApproximately(expectedProjectileX, 0.1F);
-        actual.Shape.Position.Y.Should().BeApproximately(expectedProjectileY, 0.1F);
+        actual.Radius.Should().Be(expectedRadius);
+        actual.X.Should().BeApproximately(expectedProjectileX, 0.1F);
+        actual.Y.Should().BeApproximately(expectedProjectileY, 0.1F);
     }
 
     [TestCase(75, 40, 60, 40)] // projectile direction: right
@@ -183,7 +135,7 @@ public class BodyBuilderTests
         actual.Update(windowWidth, windowHeight);
 
         // Assert
-        actual.Shape.Position.X.Should().BeApproximately(expectedProjectileXAfterUpdate, 0.1F);
-        actual.Shape.Position.Y.Should().BeApproximately(expectedProjectileYAfterUpdate, 0.1F);
+        actual.X.Should().BeApproximately(expectedProjectileXAfterUpdate, 0.1F);
+        actual.Y.Should().BeApproximately(expectedProjectileYAfterUpdate, 0.1F);
     }
 }
