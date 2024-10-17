@@ -6,3 +6,5 @@ public enum Sides {
     BOTTOM,
     LEFT
 }
+
+public enum BodySize { Small, Medium, Large }

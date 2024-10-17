@@ -1,4 +1,5 @@
 using App.Helpers;
+using App.Models;
 using FluentAssertions;
 using NSubstitute;
 
@@ -17,17 +18,35 @@ public class RandomGeneratorTests
         _sut = new RandomGenerator(_rnd);
     }
 
-    [Test]
-    public void Next_WhenInvoked_InvokeRandomMethodCorrectly()
+    [TestCase(0, BodySize.Small)]
+    [TestCase(1, BodySize.Medium)]
+    [TestCase(2, BodySize.Large)]
+    public void GetRandomBodySize_ReturnsExpectedBodySize(int randomValue, BodySize expectedBodySize)
     {
         // Arrange
-        int expected = 5;
+        _rnd.Next(default).ReturnsForAnyArgs(randomValue);
 
         // Act
-        _sut.Next(expected);
+        BodySize actualBodySize = _sut.GetRandomBodySize();
 
         // Assert
-        _rnd.Received().Next(expected);
+        actualBodySize.Should().Be(expectedBodySize);
+    }
+
+    [TestCase(0, Sides.TOP)]
+    [TestCase(1, Sides.RIGHT)]
+    [TestCase(2, Sides.BOTTOM)]
+    [TestCase(3, Sides.LEFT)]
+    public void GetRandomSide_ReturnsExpectedSide(int randomValue, Sides expectedSide)
+    {
+        // Arrange
+        _rnd.Next(default).ReturnsForAnyArgs(randomValue);
+
+        // Act
+        Sides actualSide = _sut.GetRandomSide();
+
+        // Assert
+        actualSide.Should().Be(expectedSide);
     }
 
     [Test]

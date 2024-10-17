@@ -4,9 +4,12 @@ namespace App.Models;
 
 public class Meteorite : MovingBody
 {
-    public Meteorite(float radius, (float X, float Y) position, Vector2 vector, float angle = 0)
-        : base(radius, position, vector, angle)
+    public BodySize Size { get; set; }
+
+    public Meteorite(BodySize size, (float X, float Y) position, Vector2 vector, float angle = 0)
+        : base(SetRadius(size), position, vector, angle)
     {
+        Size = size;
     }
 
     public override void Update(uint windowWidth, uint windowHeight)
@@ -20,4 +23,12 @@ public class Meteorite : MovingBody
 
         base.Update(windowWidth, windowHeight);
     }
+
+    private static float SetRadius(BodySize size) => size switch
+    {
+        BodySize.Small => GameParameters.SmallBodySizeRadius,
+        BodySize.Medium => GameParameters.MediumBodySizeRadius,
+        BodySize.Large => GameParameters.LargeBodySizeRadius,
+        _ => throw new ArgumentOutOfRangeException(nameof(size), "Body size not valid")
+    };
 }

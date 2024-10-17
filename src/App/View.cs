@@ -1,9 +1,11 @@
 using System.Drawing;
+using System.Numerics;
 using App.Models;
 using Velaptor.Batching;
 using Velaptor.Content;
 using Velaptor.Content.Fonts;
 using Velaptor.ExtensionMethods;
+using Velaptor.Graphics;
 using Velaptor.Graphics.Renderers;
 
 namespace App;
@@ -59,7 +61,7 @@ public class View
     {
         _batcher.Begin();
         RenderMascot();
-        // RenderMeteorites();
+        RenderMeteorites();
         // RenderProjectiles();
         RenderScore();
         _batcher.End();
@@ -76,8 +78,11 @@ public class View
     {
         foreach (var m in _model.GetMeteorites())
         {
-
-            //_renderer.Render(m.Shape);
+            _renderer.Render(new CircleShape()
+            {
+                Diameter = m.Radius * 2,
+                Position = new Vector2(m.X, m.Y)
+            });
         }
 
     }

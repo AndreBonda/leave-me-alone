@@ -1,7 +1,5 @@
-using System.Drawing;
 using System.Numerics;
 using App.Helpers;
-using Velaptor.Graphics;
 
 namespace App.Models;
 
@@ -16,15 +14,11 @@ public class BodyBuilder
 
     public Meteorite BuildNewMeteorite(uint windowWidth, uint windowHeight)
     {
-        var side = RandomSide();
-        return new Meteorite(
-            radius: RandomMeteoriteRadius(),
-            position: RandomInitialPosition(
-                side,
-                windowWidth,
-                windowHeight),
-            GenerateRandomVector(side)
-        );
+        var side = _rnd.GetRandomSide();
+        var size = _rnd.GetRandomBodySize();
+        var position = GetRandomInitialPosition(side, windowWidth, windowHeight);
+        var vector = GetRandomVector(side);
+        return new Meteorite(size, position, vector);
     }
 
     public MovingBody BuildNewProjectile(uint windowWidth, uint windowHeight, (int X, int Y) userClickCC)
@@ -45,13 +39,7 @@ public class BodyBuilder
         );
     }
 
-    private Sides RandomSide()
-    {
-        var random = _rnd.Next(GameParameters.NumberOfSide);
-        return (Sides)random;
-    }
-
-    private Vector2 GenerateRandomVector(Sides side) =>
+    private Vector2 GetRandomVector(Sides side) =>
         side switch
         {
             Sides.TOP => new(_rnd.RandomFloat(-GameParameters.MaxV, GameParameters.MaxV), _rnd.RandomFloat(0, GameParameters.MaxV)),
@@ -61,10 +49,7 @@ public class BodyBuilder
             _ => throw new ArgumentException($"Invalid side value {side}")
         };
 
-    private float RandomMeteoriteRadius() =>
-        _rnd.RandomFloat(GameParameters.MinMeteoriteRadius, GameParameters.MaxMeteoriteRadius);
-
-    private (float X, float Y) RandomInitialPosition(Sides side, uint windowWidth, uint windowHeight) =>
+    private (float X, float Y) GetRandomInitialPosition(Sides side, uint windowWidth, uint windowHeight) =>
         side switch
         {
             Sides.TOP => new(_rnd.RandomFloat(0, windowWidth), 0),

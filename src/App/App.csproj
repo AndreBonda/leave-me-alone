@@ -18,6 +18,9 @@
       <None Update="Content\Graphics\velaptor_mascot.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+      <None Update="Content\Graphics\meteorite.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>

@@ -10,10 +10,10 @@ public class Body {
     public Body(float radius, (float X, float Y) position, float angle = 0)
     {
         Id = Guid.NewGuid();
-        Radius = radius;
         X = position.X;
         Y = position.Y;
         Angle = angle;
+        Radius = radius;
     }
 
     public bool HasCollided(Body body)

@@ -1,3 +1,5 @@
+using App.Models;
+
 namespace App.Helpers;
 
 public class RandomGenerator
@@ -9,7 +11,19 @@ public class RandomGenerator
         _rnd = rnd;
     }
 
-    public virtual int Next(int maxValue) => _rnd.Next(maxValue);
+    public virtual BodySize GetRandomBodySize()
+    {
+        var values = Enum.GetValues(typeof(BodySize));
+        return (BodySize)values.GetValue(RandomInt(values.Length))!;
+    }
+
+    public virtual Sides GetRandomSide()
+    {
+        var values = Enum.GetValues(typeof(Sides));
+        return (Sides)values.GetValue(RandomInt(values.Length))!;
+    }
+
+    public virtual int RandomInt(int maxValue) => _rnd.Next(maxValue);
 
     public virtual float RandomFloat(float min, float max)
     {
