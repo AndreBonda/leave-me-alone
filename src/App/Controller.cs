@@ -12,7 +12,7 @@ public class Controller
     /// <summary>
     /// Meteorite generation frequency in milliseconds
     /// </summary>
-    private const float _METEORITE_FREQUENCY_GENERATION = 500;
+    private const float MeteoriteFrequencyGeneration = 500;
     private readonly Model _model;
     private readonly View _view;
     private readonly IAppInput<MouseState> _mouse;
@@ -40,7 +40,7 @@ public class Controller
         if (IsMouseLeftButtonClicked())
             _model.GenerateProjectile((_mouse.GetState().GetX(), _mouse.GetState().GetY()));
 
-        if (_elapsedMs > _METEORITE_FREQUENCY_GENERATION)
+        if (_elapsedMs > MeteoriteFrequencyGeneration)
         {
             _model.GenerateMeteorite();
             _elapsedMs = 0;
