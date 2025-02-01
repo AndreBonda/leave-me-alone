@@ -4,8 +4,6 @@ namespace App;
 
 public class Model
 {
-    private uint? _windowWidth;
-    private uint? _windowHeight;
     private readonly HashSet<Meteorite> _meteorites = new();
     private readonly HashSet<MovingBody> _projectiles = new();
     private readonly BodyBuilder _bodyBuilder;
@@ -16,21 +14,14 @@ public class Model
         _bodyBuilder = bodyBuilder;
     }
 
-    public void InitWindowSize(uint windowWidth, uint windowHeight)
+    public virtual void GenerateMeteorite(uint windowWidth, uint windowHeight) =>
+        _meteorites.Add(_bodyBuilder.BuildNewMeteorite(windowWidth, windowHeight));
+    public virtual void GenerateProjectile((int X, int Y) userClickCC, uint windowWidth, uint windowHeight)
+        => _projectiles.Add(_bodyBuilder.BuildNewProjectile(windowWidth, windowHeight, userClickCC));
+
+    public virtual void UpdateGameModel(uint windowWidth, uint windowHeight)
     {
-        _windowWidth = windowWidth;
-        _windowHeight = windowHeight;
-    }
-
-    public virtual void GenerateMeteorite() => _meteorites.Add(_bodyBuilder.BuildNewMeteorite(_windowWidth.Value, _windowHeight.Value));
-    public virtual void GenerateProjectile((int X, int Y) userClickCC) => _projectiles.Add(_bodyBuilder.BuildNewProjectile(_windowWidth.Value, _windowHeight.Value, userClickCC));
-
-    public virtual void UpdateGameModel()
-    {
-        ArgumentNullException.ThrowIfNull(_windowWidth);
-        ArgumentNullException.ThrowIfNull(_windowHeight);
-
-        UpdateBodies();
+        UpdateBodies(windowWidth, windowHeight);
         HandleBodyCollisions();
         HandleBodyDespawns();
     }
@@ -38,13 +29,13 @@ public class Model
     public IEnumerable<Meteorite> GetMeteorites() => _meteorites;
     public IEnumerable<MovingBody> GetProjectiles() => _projectiles;
 
-    private void UpdateBodies()
+    private void UpdateBodies(uint windowWidth, uint windowHeight)
     {
         foreach (var m in _meteorites)
-            m.Update(_windowWidth.Value, _windowHeight.Value);
+            m.Update(windowWidth, windowHeight);
 
         foreach (var p in _projectiles)
-            p.Update(_windowWidth.Value, _windowHeight.Value);
+            p.Update(windowWidth, windowHeight);
     }
 
     private void HandleBodyDespawns()

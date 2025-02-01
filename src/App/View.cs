@@ -12,8 +12,6 @@ namespace App;
 
 public class View
 {
-    private uint? _windowWidth;
-    private uint? _windowHeight;
     private readonly Model _model;
     private readonly IFontRenderer _fontRenderer;
     private readonly IShapeRenderer _renderer;
@@ -44,10 +42,8 @@ public class View
         _textureLoader = textureLoader;
     }
 
-    public void InitView(uint windowWidth, uint windowHeight)
+    public void InitView()
     {
-        _windowWidth = windowWidth;
-        _windowHeight = windowHeight;
         _font = _fontLoader.Load(GameResources.FontName, 11);
         _mascotTexture = _textureLoader.Load(GameResources.MascotImageName);
         _smallMeteoriteTexture = _textureLoader.Load(GameResources.SmallMeteoriteImageName);
@@ -64,20 +60,20 @@ public class View
         _textureLoader.Unload(GameResources.LargeMeteoriteImageName);
     }
 
-    public void RenderGame()
+    public void RenderGame(uint windowWidth, uint windowHeight)
     {
         _batcher.Begin();
-        RenderMascot();
+        RenderMascot(windowWidth, windowHeight);
         RenderMeteorites();
         RenderProjectiles();
         RenderScore();
         _batcher.End();
     }
 
-    private void RenderMascot()
+    private void RenderMascot(uint windowWidth, uint windowHeight)
     {
-        var x = (int)(_windowWidth / 2);
-        var y = (int)(_windowHeight / 2);
+        var x = (int)(windowWidth / 2);
+        var y = (int)(windowHeight / 2);
         _textureRenderer.Render(_mascotTexture, x, y);
     }
 

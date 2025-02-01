@@ -9,7 +9,7 @@ using Velaptor.Content.Fonts;
 using Velaptor.Graphics.Renderers;
 using Velaptor.Input;
 
-namespace Testing.App;
+namespace Testing;
 
 [TestFixture]
 public class ControllerTests
@@ -17,6 +17,7 @@ public class ControllerTests
     private Controller _sut;
     private Model _model;
     private View _view;
+    private const uint _windowWidth = 0, _windowHeight = 0;
 
     [SetUp]
     protected void SetUp()
@@ -52,10 +53,10 @@ public class ControllerTests
         };
 
         // Act
-        _sut.UpdateGame(frameTime);
+        _sut.UpdateGame(frameTime, _windowWidth, _windowHeight);
 
         // Assert
-        _model.DidNotReceive().GenerateMeteorite();
+        _model.DidNotReceive().GenerateMeteorite(_windowWidth, _windowHeight);
     }
 
     [Test]
@@ -68,9 +69,9 @@ public class ControllerTests
         };
 
         // Act
-        _sut.UpdateGame(frameTime);
+        _sut.UpdateGame(frameTime,_windowWidth, _windowHeight);
 
         // Assert
-        _model.Received().UpdateGameModel();
+        _model.Received().UpdateGameModel(_windowWidth, _windowHeight);
     }
 }

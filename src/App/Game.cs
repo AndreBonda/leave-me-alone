@@ -14,19 +14,19 @@ public class Game : Window
 
     protected override void OnLoad()
     {
-        _controller.LoadGame(Width, Height);
+        _controller.LoadGame();
         base.OnLoad();
     }
 
     protected override void OnUpdate(FrameTime frameTime)
     {
-        _controller.UpdateGame(frameTime);
+        _controller.UpdateGame(frameTime, Width, Height);
         base.OnUpdate(frameTime);
     }
 
     protected override void OnDraw(FrameTime frameTime)
     {
-        _controller.RenderGame();
+        _controller.RenderGame(Width, Height);
         base.OnDraw(frameTime);
     }
 

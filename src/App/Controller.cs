@@ -26,33 +26,32 @@ public class Controller
         _mouse = mouse;
     }
 
-    public void LoadGame(uint windowWidth, uint windowHeight)
-    {
-        _model.InitWindowSize(windowWidth, windowHeight);
-        _view.InitView(windowWidth, windowHeight);
+    public void LoadGame() => _view.InitView();
 
-    }
-
-    public void UpdateGame(FrameTime frameTime)
+    public void UpdateGame(FrameTime frameTime, uint windowWidth, uint windowHeight)
     {
         _elapsedMs += frameTime.ElapsedTime.Milliseconds;
 
         if (IsMouseLeftButtonClicked())
-            _model.GenerateProjectile((_mouse.GetState().GetX(), _mouse.GetState().GetY()));
+        {
+            var mouseCoordinates = (_mouse.GetState().GetX(), _mouse.GetState().GetY());
+            _model.GenerateProjectile(mouseCoordinates, windowWidth, windowHeight);
+
+        }
 
         if (_elapsedMs > MeteoriteFrequencyGeneration)
         {
-            _model.GenerateMeteorite();
+            _model.GenerateMeteorite(windowWidth, windowHeight);
             _elapsedMs = 0;
         }
 
-        _model.UpdateGameModel();
+        _model.UpdateGameModel(windowWidth, windowHeight);
         _prevMouseState = _mouse.GetState();
     }
 
-    public void RenderGame()
+    public void RenderGame(uint windowWidth, uint windowHeight)
     {
-        _view.RenderGame();
+        _view.RenderGame(windowWidth, windowHeight);
     }
 
     public void UnloadGame()
